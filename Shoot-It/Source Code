@@ -1,0 +1,77 @@
+Win-SiMPLE
+//^^^App Codec^^^
+//-------------------------------------------------------------------
+//| Do NOT rely on the notes that I have left                       |
+//| They are either outdated and have been                          |
+//| left there for reference.                                       |
+//| Some codes are useless                                          |
+//--------------------------------------------------------------------
+//|Code Info:                                                       |
+//| All codes here are under the Apache 2.0 Licence                 |
+//| DO NOT DISTRIBUTE CODE!!                                        |
+//--------------------------------------------------------------------
+//|Github/Dylankjy/Codes-For-SiMPLE                                 |
+//|Copyright (c) 2015                                               |
+//|Code Structure version=1.1                                       |
+//--------------------------------------------------------------------
+//
+//
+//
+//
+//---------------------- [Starting heights] --------------------------
+Int xm,ym,zm     //---> Data for mouse
+randomize()
+Set xr = 99999
+Set yr = ypixels()-100
+Set xu = 300
+Set yu = 100
+Set colorufo=1
+Set colorrocket=383
+//--------------------------- [Assets] -------------------------------
+messagebox("This game is licenced under Apache 2.0 | (c) Dylankjy 2015 DO NOT DISTRUBUTE!!")
+messagebox("Welcome to shoot it! Press OK to start Press ESC to quit.                                                                                                        ")
+Do
+  Call cls
+     Read mouse(xm,ym,zm)
+     Hidemouse
+     Read quitkey(SPACE)
+     gunsight(xm,ym,2,WHITE) @
+     stars @
+     ufo(xu,yu,colorufo) @
+     rocket(xr,yr,colorrocket) @
+	 
+	 
+	 //---> Rocket explode
+	 If(zm = 1 And (xm>=xr-50 And xm<=xr+50) And (ym >= yr-50 And ym <= yr+50)) 
+		 explode(xm,ym)@
+	     Set xr=xr+100
+	     Set yr=yr-100
+	     Set colorrocket=colorrocket-1
+	 Endif
+	 
+	 //---> Ufo explode
+	 If(zm = 1 And (xm>=xu-15 And xm<=xu+15) And (ym >= yu-15 And yu <= yr+15)) 
+		 explode (xm,ym)@
+	     Set xu=xu+200
+		 Set yu=yu+300
+		 Set colorufo=colorufo+1
+	 Endif
+	 delay(50)
+	 
+	 //---> Reset ufo if out of screen
+	 If(yu > ypixels()-100) 
+		 Set yu=50
+	     Set xu=50
+	 Endif
+	 If (yr<100)
+		 Set yr=ypixels()
+		 Set xu=ypixels()-50
+	 Endif
+  Read quitkey(ESC)
+Loop
+//---------------------- [Append Libraries] --------------------------
+Append G:gunsight
+Append G:ufo
+Append G:rocket
+Append G:stars
+Append G:explode
